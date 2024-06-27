@@ -1,6 +1,7 @@
 import { defineConfig } from '@umijs/max';
 
 export default defineConfig({
+  //github page mark
   antd: {},
   model: {},
   initialState: {},
@@ -31,4 +32,3 @@ export default defineConfig({
   ],
   npmClient: 'pnpm',
 });
-
