@@ -36,8 +36,9 @@ jobs:
       # build umi4
       - name: Build with Umi.js
         run: |
+          echo debug ${{ steps.pages.outputs.base_url }}
           # 根据标记修改资源文件以及路径映射
-          sed -i 's`//github page mark`base: "${{ steps.pages.outputs.base_url }}",\n  publicPath: "${{ steps.pages.outputs.base_url }}",`g' .umirc.ts
+          sed -i 's`//github page mark`base: "${{ steps.pages.outputs.base_url }}/",\n  publicPath: "${{ steps.pages.outputs.base_url }}/",`g' .umirc.ts
           npm install -g pnpm
           pnpm install
           pnpm build
