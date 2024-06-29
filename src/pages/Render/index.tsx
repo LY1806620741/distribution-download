@@ -1,16 +1,26 @@
-import { PageContainer } from '@ant-design/pro-components';
-import { useModel } from '@umijs/max';
-import styles from './index.less';
+import { PageContainer, ProCard } from '@ant-design/pro-components';
 
-const HomePage: React.FC = () => {
-  const { name } = useModel('global');
+export default () => {
   return (
-    <PageContainer ghost>
-      <div>
-      {(name)}
-      </div>
-    </PageContainer>
+    <div
+      style={{
+        background: '#F5F7FA',
+      }}
+    >
+      <PageContainer>
+        <ProCard direction="column" ghost>
+          <ProCard
+            gutter={16}
+            ghost
+            style={{ height: 300 }}
+            layout="center"
+            wrap
+          >
+            <ProCard colSpan={{ md: 4 }} layout="center"></ProCard>
+            <ProCard colSpan={{ md: 8 }} />
+          </ProCard>
+        </ProCard>
+      </PageContainer>
+    </div>
   );
 };
-
-export default HomePage;

@@ -8,11 +8,13 @@ export default defineConfig({
   request: {},
   layout: {
     title: '应用下载分发',
+    antd: true,
   },
   locale: {
     // 默认使用 src/locales/zh-CN.ts 作为多语言文件
     default: 'zh-CN',
     baseSeparator: '-',
+    title: true,
   },
   routes: [
     {
@@ -20,12 +22,18 @@ export default defineConfig({
       redirect: '/home',
     },
     {
-      name: '首页',
+      name: 'index',
       path: '/home',
       component: './Home',
     },
     {
-      name: '渲染',
+      name: 'config',
+      path: '/config',
+      component: './Config',
+    },
+    {
+      layout: false,
+      name: 'render',
       path: '/render',
       component: './Render',
     },
