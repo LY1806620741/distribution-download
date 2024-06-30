@@ -2,6 +2,7 @@ import { defineConfig } from '@umijs/max';
 
 export default defineConfig({
   //github page mark
+  // runtimePublicPath: {},
   antd: {},
   model: {},
   initialState: {},
