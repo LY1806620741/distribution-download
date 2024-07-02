@@ -6,7 +6,7 @@ variable:
 style: vscode_Similar
 label: "代码编辑。重新定义。"
 desciption: "Free. Built on open source. Runs everywhere."
-download:
+download: true
 otherDownload: '<p id="download-matrix-label" class="subtext text-center"><a href="https://vscode.dev/" target="_blank" title="For quick code edits locally or remotely on GitHub and Azure Repos." id="download-buttons-web">Web</a>, <a href="/insiders" id="download-buttons-insiders">Insiders edition</a>, or <a href="#alt-downloads">other platforms</a></p>'
 liscense: "By using VS Code, you agree to its license and privacy statement."
 # showImage: "https://code.visualstudio.com/assets/home/home-screenshot-{image_platform}.png"

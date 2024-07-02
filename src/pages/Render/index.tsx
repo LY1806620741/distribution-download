@@ -1,6 +1,9 @@
+import { DownOutlined } from '@ant-design/icons';
 import { PageContainer, ProCard } from '@ant-design/pro-components';
+import { Dropdown, Flex } from 'antd';
 import YAML from 'js-yaml';
 import { useEffect, useState } from 'react';
+// import styles from './index.less';
 
 export default () => {
   const [yamlData, setYamlData] = useState(null);
@@ -54,16 +57,31 @@ export default () => {
             <ProCard
               colSpan={{ md: yamlData.showImage ? 4 : 24 }}
               layout="center"
-            ></ProCard>
-            {yamlData ? (
-              yamlData.showImage ? (
-                <ProCard colSpan={{ md: 8 }} />
-              ) : (
-                <></>
-              )
-            ) : (
-              <></>
-            )}
+              split={'horizontal'}
+            >
+              {yamlData.label && <div>{yamlData.label}</div>}
+              {yamlData.desciption && <div>{yamlData.desciption}</div>}
+              {yamlData.download && (
+                <div>
+                  {' '}
+                  <Dropdown.Button size="large" icon={<DownOutlined />}>
+                    <Flex vertical>
+                      <span>Download Mac Universal</span>
+                      <small>Stable Build</small>
+                    </Flex>
+                  </Dropdown.Button>
+                </div>
+              )}
+              {yamlData.otherDownload && (
+                <div>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: yamlData.otherDownload }}
+                  />
+                </div>
+              )}
+              {yamlData.liscense && <div>{yamlData.liscense}</div>}
+            </ProCard>
+            {yamlData?.showImage && <ProCard colSpan={{ md: 8 }} />}
           </ProCard>
         </ProCard>
       </PageContainer>
