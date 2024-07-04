@@ -1,0 +1,62 @@
+@font-color: #fff;
+@backgroud-color: #2c2c32;
+@font: 'Segoe UI', 'Helvetica Neue', 'Helvetica', Arial, sans-serif;
+
+* {
+  -webkit-font-smoothing: antialiased;
+}
+
+.layoutHeader {
+  display: flex;
+  align-items: center;
+  color: @font-color;
+  font-size: 20px;
+  font-family: @font;
+  background-color: @backgroud-color;
+  @media (max-width: 991px) {
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: @font-color;
+  }
+
+  img {
+    padding: 0 25px;
+  }
+
+  span {
+    letter-spacing: -0.04rem;
+  }
+
+  ul {
+    background-color: @backgroud-color;
+  }
+}
+
+.tips {
+  background-color: #25252b;
+  color: #ccc;
+  font-size: 16px;
+
+  p {
+    margin: 1.1rem 0;
+    width: 100%;
+    text-align: center;
+
+    a {
+      text-decoration: underline;
+    }
+  }
+}
+
+.mainContainer {
+  background-color: @backgroud-color;
+  font-family: @font;
+}
+
+.downloadCard {
+  color: @font-color;
+  background-color: @backgroud-color;
+}
