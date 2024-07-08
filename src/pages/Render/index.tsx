@@ -50,7 +50,7 @@ export default () => {
         <Header className={styles.layoutHeader}>
           <a href={window.location.pathname + window.location.search}>
             {yamlData.icon && <img src={yamlData.icon} height="40" />}
-            <span>Visual Studio Code</span>
+            {yamlData.productName && <span>{yamlData.productName}</span>}
           </a>
           <Menu
             theme="dark"

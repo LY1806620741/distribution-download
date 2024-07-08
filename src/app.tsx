@@ -1,5 +1,6 @@
 // 运行时配置
-
+import { SelectLang } from '@@/plugin-locale';
+import { Github } from './components/Base';
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
@@ -13,6 +14,18 @@ export const layout = () => {
     menu: {
       locale: true,
     },
-    layout: "top",
+    layout: 'top',
+    rightRender: () => {
+      return (
+        <>
+          <SelectLang />
+          <Github
+            repository="LY1806620741/distribution-download"
+            showTag="0.0.1.pre"
+            showStarsNum
+          />
+        </>
+      );
+    },
   };
 };
