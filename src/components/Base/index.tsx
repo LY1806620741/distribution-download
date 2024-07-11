@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import { request } from '@umijs/max';
 import { Flex } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './index.less';
 
 const githubUrl = 'https://github.com';
@@ -20,84 +20,114 @@ interface GithubProps {
   showTag?: string;
 }
 
-export const Github: React.FC<GithubProps> = (props) => {
-  const { style, repository, showStarsNum, showForksNum, showTag } = props;
-  const inlineStyle = {
-    cursor: 'pointer',
-    padding: '12px',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 18,
-    verticalAlign: 'middle',
-    ...style,
-  };
+interface GithubState {
+  isWide: boolean;
+  repositoryInfo?: any;
+}
 
-  const [repositoryInfo, setRepositoryInfo] = useState(null);
-  const [isWide, setIsWide] = useState(window.innerWidth > 600);
+//检查浏览器宽度
+function checkWide() {
+  return window.innerWidth > 767;
+}
 
-  useEffect(() => {
+class GithubClass extends React.Component<GithubProps, GithubState> {
+  constructor(props: GithubProps) {
+    super(props);
+    this.state = {
+      isWide: checkWide(),
+    };
+    this.handleResize = this.handleResize.bind(this);
+  }
+
+  componentDidMount() {
     //窗口大小变更
-    const handleResize = () => setIsWide(window.innerWidth > 600);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    if (isWide && (showForksNum || showStarsNum) && !repositoryInfo) {
-      const fetchRepositoryInfo = async () => {
-        const response = await request(
-          `https://api.github.com/repos/${repository}`,
+    window.addEventListener('resize', this.handleResize);
+    if (
+      this.state.isWide &&
+      (this.props.showForksNum || this.props.showStarsNum) &&
+      !this.state.repositoryInfo
+    ) {
+      (async () => {
+        const repositoryInfo = await request(
+          `https://api.github.com/repos/${this.props.repository}`,
         );
-        setRepositoryInfo(response);
-      };
-      fetchRepositoryInfo();
+        this.setState({
+          repositoryInfo: repositoryInfo,
+        });
+      })();
     }
-  }, [isWide]);
+  }
 
-  return isWide ? (
-    <Flex
-      className={styles.githubLabel}
-      onClick={() => {
-        window.open(`${githubUrl}/${repository}`);
-      }}
-      title={'goto github'}
-    >
-      <Flex>
-        <BranchesOutlined style={{ fontSize: '32px' }} />
-      </Flex>
-      <Flex vertical>
-        {repository}
-        <Flex gap={4}>
-          {showTag && (
-            <>
-              <TagOutlined />
-              {showTag}
-            </>
-          )}
-          {showStarsNum && (
-            <>
-              <StarOutlined />
-              {repositoryInfo?.stargazers_count}
-            </>
-          )}
-          {showForksNum && (
-            <>
-              <ForkOutlined />
-              {repositoryInfo?.forks_count}
-            </>
-          )}
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  handleResize() {
+    this.setState({
+      isWide: checkWide(),
+    });
+  }
+
+  render() {
+    const { style, repository, showStarsNum, showForksNum, showTag } =
+      this.props;
+    const inlineStyle = {
+      cursor: 'pointer',
+      padding: '12px',
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: 18,
+      verticalAlign: 'middle',
+      ...style,
+    };
+
+    return this.state.isWide ? (
+      <Flex
+        className={styles.githubLabel}
+        onClick={() => {
+          window.open(`${githubUrl}/${repository}`);
+        }}
+        title={'goto github'}
+      >
+        <Flex>
+          <BranchesOutlined style={{ fontSize: '32px' }} />
+        </Flex>
+        <Flex vertical>
+          {repository}
+          <Flex gap={4}>
+            {showTag && (
+              <div>
+                <TagOutlined />
+                {showTag}
+              </div>
+            )}
+            {showStarsNum && (
+              <div>
+                <StarOutlined />
+                {this.state.repositoryInfo?.stargazers_count}
+              </div>
+            )}
+            {showForksNum && (
+              <div>
+                <ForkOutlined />
+                {this.state.repositoryInfo?.forks_count}
+              </div>
+            )}
+          </Flex>
         </Flex>
       </Flex>
-    </Flex>
-  ) : (
-    <span
-      style={inlineStyle}
-      onClick={() => {
-        window.open(`${githubUrl}/${repository}`);
-      }}
-    >
-      <GithubOutlined />
-    </span>
-  );
-};
+    ) : (
+      <span
+        style={inlineStyle}
+        onClick={() => {
+          window.open(`${githubUrl}/${repository}`);
+        }}
+      >
+        <GithubOutlined />
+      </span>
+    );
+  }
+}
+
+export const Github = GithubClass;

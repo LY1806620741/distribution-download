@@ -15,9 +15,11 @@
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
     "@ant-design/pro-components": "^2.4.4",
+    "@types/ua-parser-js": "^0.7.39",
     "@umijs/max": "^4.2.15",
     "antd": "^5.4.0",
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "ua-parser-js": "^1.0.38"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5",

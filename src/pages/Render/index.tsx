@@ -1,3 +1,4 @@
+import { DebugPanel } from '@/components/Render';
 import { DownOutlined } from '@ant-design/icons';
 import { PageContainer, ProCard } from '@ant-design/pro-components';
 import { Dropdown, Flex, Layout, Menu, MenuProps, Row } from 'antd';
@@ -5,7 +6,7 @@ import YAML from 'js-yaml';
 import { useEffect, useState } from 'react';
 import styles from './index.less';
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 export default () => {
   const [yamlData, setYamlData] = useState(null);
@@ -16,7 +17,6 @@ export default () => {
       const configFileUrl = searchParams.get('config');
       if (!configFileUrl) return;
       try {
-        console.log(configFileUrl);
         const response = await fetch(configFileUrl);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -25,6 +25,16 @@ export default () => {
         try {
           // 使用js-yaml的safeLoad或safeLoadAll方法解析YAML字符串
           const parsedYaml = YAML.load(data);
+          // merge 其他参数
+          searchParams.forEach((value, key) => {
+            if (key !== 'config') {
+              if (!value) {
+                parsedYaml[key] = 'true';
+              } else {
+                parsedYaml[key] = value;
+              }
+            }
+          });
           setYamlData(parsedYaml);
         } catch (e) {
           console.error('Error parsing YAML:', e);
@@ -46,6 +56,7 @@ export default () => {
 
   return (
     <>
+      {yamlData.debug && <DebugPanel data={{ yamlData: yamlData }} />}
       <Layout>
         <Header className={styles.layoutHeader}>
           <a href={window.location.pathname + window.location.search}>
@@ -122,9 +133,6 @@ export default () => {
             </ProCard>
           </PageContainer>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
       </Layout>
     </>
   );
