@@ -1,12 +1,8 @@
 import { DebugPanel } from '@/components/Render';
-import { DownOutlined } from '@ant-design/icons';
-import { PageContainer, ProCard } from '@ant-design/pro-components';
-import { Dropdown, Flex, Layout, Menu, MenuProps, Row } from 'antd';
+
+import { DynamicStyleComponent } from '@/components/Render/styleLoad';
 import YAML from 'js-yaml';
 import { useEffect, useState } from 'react';
-import styles from './index.less';
-
-const { Header, Content } = Layout;
 
 export default () => {
   const [yamlData, setYamlData] = useState(null);
@@ -49,91 +45,11 @@ export default () => {
 
   if (!yamlData) return <div>Loading...</div>;
 
-  const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
-    key,
-    label: `nav ${key}`,
-  }));
-
   return (
     <>
       {yamlData.debug && <DebugPanel data={{ yamlData: yamlData }} />}
-      <Layout>
-        <Header className={styles.layoutHeader}>
-          <a href={window.location.pathname + window.location.search}>
-            {yamlData.icon && <img src={yamlData.icon} height="40" />}
-            {yamlData.productName && <span>{yamlData.productName}</span>}
-          </a>
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={['2']}
-            items={items1}
-            style={{ flex: 1, minWidth: 0 }}
-          ></Menu>
-        </Header>
-        <Content>
-          <Row className={styles.tips}>
-            <p>
-              <a href="/updates">Version 1.91</a> is now available! Read about
-              the new features and fixes from June.
-            </p>
-          </Row>
-          <PageContainer className={styles.mainContainer}>
-            <ProCard direction="column" ghost>
-              <ProCard
-                gutter={16}
-                ghost
-                style={{ height: 300 }}
-                layout="center"
-                wrap
-              >
-                <ProCard
-                  colSpan={{ md: yamlData.showImage ? 4 : 24 }}
-                  layout="center"
-                  split={'horizontal'}
-                  className={styles.downloadCard}
-                >
-                  {yamlData.label && (
-                    <div style={{ margin: '20px 0 10px 0' }}>
-                      <h1>
-                        {yamlData.label}
-                        {yamlData.labelStrong && (
-                          <strong style={{ display: 'block' }}>
-                            {yamlData.labelStrong}
-                          </strong>
-                        )}
-                      </h1>
-                    </div>
-                  )}
-                  {yamlData.desciption && <div>{yamlData.desciption}</div>}
-                  {yamlData.download && (
-                    <div>
-                      {' '}
-                      <Dropdown.Button size="large" icon={<DownOutlined />}>
-                        <Flex vertical>
-                          <span>Download Mac Universal</span>
-                          <small>Stable Build</small>
-                        </Flex>
-                      </Dropdown.Button>
-                    </div>
-                  )}
-                  {yamlData.otherDownload && (
-                    <div>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: yamlData.otherDownload,
-                        }}
-                      />
-                    </div>
-                  )}
-                  {yamlData.liscense && <div>{yamlData.liscense}</div>}
-                </ProCard>
-                {yamlData?.showImage && <ProCard colSpan={{ md: 8 }} />}
-              </ProCard>
-            </ProCard>
-          </PageContainer>
-        </Content>
-      </Layout>
+
+      <DynamicStyleComponent config={yamlData} />
     </>
   );
 };
