@@ -1,6 +1,7 @@
-import { DownOutlined } from '@ant-design/icons';
+import { SelectLang } from '@@/plugin-locale';
+import { DownOutlined, GithubOutlined } from '@ant-design/icons';
 import { PageContainer, ProCard } from '@ant-design/pro-components';
-import { Dropdown, Flex, Layout, Menu, MenuProps, Row } from 'antd';
+import { Button, Dropdown, Flex, Layout, Row, Tooltip } from 'antd';
 import React from 'react';
 import styles from './index.less';
 
@@ -19,25 +20,23 @@ type ConfigProps = {
 };
 
 const VscodeSimilar: React.FC<{ config: ConfigProps }> = ({ config }) => {
-  const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
-    key,
-    label: `nav ${key}`,
-  }));
-
   return (
     <Layout>
       <Header className={styles.layoutHeader}>
-        <a href={window.location.pathname + window.location.search}>
-          {config.icon && <img src={config.icon} height="40" />}
-          {config.productName && <span>{config.productName}</span>}
-        </a>
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={['2']}
-          items={items1}
-          style={{ flex: 1, minWidth: 0 }}
-        ></Menu>
+        <Flex justify="space-between" align="center" style={{ width: '100%' }}>
+          <a href={window.location.pathname + window.location.search}>
+            {config.icon && <img src={config.icon} height="40" />}
+            {config.productName && <span>{config.productName}</span>}
+          </a>
+          <Flex gap="small" align="center">
+            <SelectLang />
+            {config.github && (
+              <Tooltip title="Gthub">
+                <Button ghost icon={<GithubOutlined />} href={config.github} />
+              </Tooltip>
+            )}
+          </Flex>
+        </Flex>
       </Header>
       <Content>
         <Row className={styles.tips}>
