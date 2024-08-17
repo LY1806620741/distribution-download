@@ -3,6 +3,7 @@ import { DebugPanel } from '@/components/Render';
 import { DynamicStyleComponent } from '@/components/Render/styleLoad';
 import YAML from 'js-yaml';
 import { useEffect, useState } from 'react';
+import { getLocale } from 'umi';
 
 export default () => {
   const [yamlData, setYamlData] = useState(null);
@@ -31,6 +32,39 @@ export default () => {
               }
             }
           });
+          // load languege if set language
+          if (parsedYaml.lang) {
+            let configFile = parsedYaml.lang.find(
+              (e) => e.lang === getLocale(),
+            )?.configFile;
+            if (configFile) {
+              let configPath;
+              if (configFile.indexOf('/') > 0) {
+                configPath = configFile;
+              } else {
+                //relative path
+                let lastSlashIndex = configFileUrl.lastIndexOf('/');
+                configPath =
+                  configFileUrl.substring(0, lastSlashIndex + 1) + configFile;
+              }
+
+              const response = await fetch(configPath);
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              const langData = YAML.load(await response.text());
+              setYamlData({
+                ...parsedYaml,
+                ...langData,
+              });
+              return;
+            }
+            // if (getLocale() in parsedYaml.lang.key){
+            //   console.log(configFileUrl);
+            //   console.log(parsedYaml?.lang?.en);
+            // }
+          }
+
           setYamlData(parsedYaml);
         } catch (e) {
           console.error('Error parsing YAML:', e);

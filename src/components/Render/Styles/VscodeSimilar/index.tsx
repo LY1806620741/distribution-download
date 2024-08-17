@@ -1,3 +1,7 @@
+/**
+ * https://github.com/microsoft/vscode-docs/blob/b7aab4de087c0dfa1ca5228b10113d54ed489b25/release-notes/images/1_54/macOS-universal-download.png
+ */
+
 import { SelectLang } from '@@/plugin-locale';
 import { DownOutlined, GithubOutlined } from '@ant-design/icons';
 import { PageContainer, ProCard } from '@ant-design/pro-components';
@@ -29,7 +33,13 @@ const VscodeSimilar: React.FC<{ config: ConfigProps }> = ({ config }) => {
             {config.productName && <span>{config.productName}</span>}
           </a>
           <Flex gap="small" align="center">
-            <SelectLang />
+            {config.lang && (
+              <SelectLang
+                postLocalesData={() => {
+                  return config.lang;
+                }}
+              />
+            )}
             {config.github && (
               <Tooltip title="Gthub">
                 <Button ghost icon={<GithubOutlined />} href={config.github} />
@@ -76,7 +86,11 @@ const VscodeSimilar: React.FC<{ config: ConfigProps }> = ({ config }) => {
                 {config.download && (
                   <div>
                     {' '}
-                    <Dropdown.Button size="large" icon={<DownOutlined />}>
+                    <Dropdown.Button
+                      className={styles.downloadButton}
+                      size="large"
+                      icon={<DownOutlined />}
+                    >
                       <Flex vertical>
                         <span>Download Mac Universal</span>
                         <small>Stable Build</small>

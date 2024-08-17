@@ -33,6 +33,11 @@ export default defineConfig({
       component: './Config',
     },
     {
+      name: 'vision',
+      path: '/vision',
+      component: './Vision',
+    },
+    {
       layout: false,
       name: 'render',
       path: '/render',
