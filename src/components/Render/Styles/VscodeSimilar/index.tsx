@@ -3,9 +3,13 @@
  */
 
 import { SelectLang } from '@@/plugin-locale';
-import { DownOutlined, GithubOutlined } from '@ant-design/icons';
+import {
+  DownloadOutlined,
+  DownOutlined,
+  GithubOutlined,
+} from '@ant-design/icons';
 import { PageContainer, ProCard } from '@ant-design/pro-components';
-import { Button, Dropdown, Flex, Layout, Row, Tooltip } from 'antd';
+import { Button, Col, Dropdown, Flex, Layout, Row, Tooltip } from 'antd';
 import React from 'react';
 import styles from './index.less';
 
@@ -90,6 +94,43 @@ const VscodeSimilar: React.FC<{ config: ConfigProps }> = ({ config }) => {
                       className={styles.downloadButton}
                       size="large"
                       icon={<DownOutlined />}
+                      dropdownRender={(menu: ReactElement | null) => (
+                        <div className={styles.contentStyle}>
+                          {menu &&
+                            React.cloneElement(menu as React.ReactElement, {
+                              style: styles.menuStyle,
+                            })}
+                          <Row>
+                            <Col span={4} offset={16}>
+                              Stable
+                            </Col>
+                            <Col span={4} className={styles.insiders}>
+                              Insiders
+                            </Col>
+                          </Row>
+                          <Row className={styles.platform}>
+                            <Col span={8}>macOS</Col>
+                            <Col span={8}>Universal</Col>
+                            <Col span={4} style={{ textAlign: 'center' }}>
+                              <DownloadOutlined />
+                            </Col>
+                            <Col
+                              span={4}
+                              className={styles.insiders}
+                              style={{ textAlign: 'center' }}
+                            >
+                              <a href="#">
+                                <DownloadOutlined />
+                              </a>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Flex vertical>Windows x64</Flex>
+                            <Flex vertical></Flex>
+                            <Flex vertical></Flex>
+                          </Row>
+                        </div>
+                      )}
                     >
                       <Flex vertical>
                         <span>Download Mac Universal</span>
