@@ -61,21 +61,15 @@ const VscodeSimilar: React.FC<{ config: ConfigProps }> = ({ config }) => {
         </Row>
         <PageContainer className={styles.mainContainer}>
           <ProCard direction="column" ghost>
-            <ProCard
-              gutter={16}
-              ghost
-              style={{ height: 300 }}
-              layout="center"
-              wrap
-            >
+            <ProCard gutter={16} ghost layout="center" wrap>
               <ProCard
-                colSpan={{ md: config.showImage ? 4 : 24 }}
+                colSpan={{ md: config.showImage ? 8 : 24 }}
                 layout="center"
                 split={'horizontal'}
                 className={styles.downloadCard}
               >
                 {config.label && (
-                  <div style={{ margin: '20px 0 10px 0' }}>
+                  <div style={{ margin: '20px 0 0 0' }}>
                     <h1>
                       {config.label}
                       {config.labelStrong && (
@@ -101,33 +95,67 @@ const VscodeSimilar: React.FC<{ config: ConfigProps }> = ({ config }) => {
                               style: styles.menuStyle,
                             })}
                           <Row>
-                            <Col span={4} offset={16}>
+                            <Col span={4} className={styles.stable} offset={16}>
                               Stable
                             </Col>
                             <Col span={4} className={styles.insiders}>
                               Insiders
                             </Col>
                           </Row>
+
                           <Row className={styles.platform}>
-                            <Col span={8}>macOS</Col>
+                            <Col span={8} className={styles.platformTitle}>
+                              macOS
+                            </Col>
                             <Col span={8}>Universal</Col>
-                            <Col span={4} style={{ textAlign: 'center' }}>
+                            <Col span={4} className={styles.stable}>
                               <DownloadOutlined />
                             </Col>
-                            <Col
-                              span={4}
-                              className={styles.insiders}
-                              style={{ textAlign: 'center' }}
-                            >
+                            <Col span={4} className={styles.insiders}>
                               <a href="#">
                                 <DownloadOutlined />
                               </a>
                             </Col>
                           </Row>
-                          <Row>
-                            <Flex vertical>Windows x64</Flex>
-                            <Flex vertical></Flex>
-                            <Flex vertical></Flex>
+
+                          <Row className={styles.platform}>
+                            <Col span={8} className={styles.platformTitle}>
+                              Windows x64
+                            </Col>
+                            <Col span={8}>User Installer</Col>
+                            <Col span={4} className={styles.stable}>
+                              <DownloadOutlined />
+                            </Col>
+                            <Col span={4} className={styles.insiders}>
+                              <a href="#">
+                                <DownloadOutlined />
+                              </a>
+                            </Col>
+                          </Row>
+
+                          <Row className={styles.platform}>
+                            <Col span={8} className={styles.platformTitle}>
+                              Linux x64
+                            </Col>
+                            <Col span={8}>
+                              .deb
+                              <br />
+                              .rpm
+                            </Col>
+                            <Col span={4} className={styles.stable}>
+                              <DownloadOutlined />
+                            </Col>
+                            <Col span={4} className={styles.insiders}>
+                              <a href="#">
+                                <DownloadOutlined />
+                              </a>
+                            </Col>
+                          </Row>
+
+                          <Row className={styles.platform}>
+                            <Col span={24} style={{ textAlign: 'center' }}>
+                              <a href="#">Other downloads</a>
+                            </Col>
                           </Row>
                         </div>
                       )}
